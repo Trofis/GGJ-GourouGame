@@ -2,8 +2,10 @@ import gs
 import gs.plus.render as render
 import gs.plus.input as input
 import gs.plus.audio as audio
+import gs.plus.clock as clock
 from gs.plus import *
 
+dt_text_scroll = 0.0
 
 phases = [
         [{'img': "@data/place_desert.png", 'phrase': 'Il fait chaud !'},
@@ -30,11 +32,32 @@ def main ():
     generation(gourou)
 
 
+# Cette fonction peut être appelée de partout
+# Elle utilise une variable globale (paaas bien)
+# A appeler juste après le render clear.
+def dessine_fond_qui_scroll():
+    global dt_text_scroll
+    dt_text_scroll += clock.update()
+    dt_text_scroll %= 1.0
+    for i in range(20):
+        j = i + dt_text_scroll
+        afficheTexte(j * -10.0, j * 50, '~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ', 0.15)
+
+
 def intro():
+    text_blink = 0.0
     while not input.key_press(gs.InputDevice.KeyEnter):
         render.clear()
-        afficheTexte(500, 400,'Quel est ton gourou')
-        afficheTexte(500, 300,'Choisis le sens de ta vie')
+        text_blink += clock.update()
+        if text_blink > 1.0:
+            text_blink = 0.0
+
+        # Effet de background animé à la "Street Fighter" (hem)
+        dessine_fond_qui_scroll()
+
+        afficheTexte(500, 400,'Quel est ton gourou ?', size = 2)
+        afficheTexte(500, 365,'Choisis le sens de ta vie ~~~~~~~~~~~~~~')
+        afficheTexte(500, 325,'...et appuie sur [enter]', text_blink)
         render.flip()
     # render.flip()
 
@@ -64,6 +87,8 @@ def selection():
 
         while not input.key_press(gs.InputDevice.KeyEnter):
             render.clear()
+            dessine_fond_qui_scroll()
+
             if input.key_press(gs.InputDevice.KeyLeft) and indexDecor > 0:
                 indexDecor = (indexDecor - 1)%getImgParPha(phases)
 
@@ -94,14 +119,14 @@ def selection():
 
     return Gourou
 
-def afficheTexte(x, y, texte):
+def afficheTexte(x, y, texte, transparence = 1.0, size = 1.0):
     # Ugly patch, waiting for a fix of the font kerning ^__^;
     for c in texte:
-        render.text2d(x, y, c, 30, gs.Color.White, '@data/monof55.ttf')
         if c == ' ':
-            x += 5
+            x += 5 * size
         else:
-            x += 15
+            render.text2d(x, y, c, 30 * size, gs.Color(1.0, 1.0, 1.0, transparence), '@data/monof55.ttf')
+            x += 15 * size
 
 
 def afficheImage(x, y ,phase, echelle, phraseCourante):
@@ -111,7 +136,9 @@ def afficheImage(x, y ,phase, echelle, phraseCourante):
 def generation(gourou):
     while not input.key_press(gs.InputDevice.KeyEnter):
         render.clear()
-        afficheTexte(1000, 500, 'Voyons désormais quel est votre Gourou ....')
+        dessine_fond_qui_scroll()
+
+        afficheTexte(800, 500, 'Voyons désormais quel est votre Gourou ....')
         render.image2d(200,250,0.7,'@data/Guru.jpg' )
         render.flip()
     # render.flip()
