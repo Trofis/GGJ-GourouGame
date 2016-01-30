@@ -9,9 +9,9 @@ import random
 dt_text_scroll = 0.0
 
 phases = [
-        [{'img': "@data/place_desert.png", 'phrase': ' un desert '},
-           {'img': '@data/place_espace.png', 'phrase': "l'espace"},
-           {'img': '@data/place_montagne.png', 'phrase': 'la montagne'}],
+        [{'img': "@data/plage.png", 'phrase': ' sous les cocos '},
+           {'img': '@data/foret.png', 'phrase': "sous les chênes"},
+           {'img': '@data/montagne.png', 'phrase': 'sous la neige'}],
         [{'img': '@data/chat.jpg', 'phrase': 'chat'},
              {'img': '@data/phoque.jpg', 'phrase': 'phoque'},
              {'img': '@data/phoque2.jpg', 'phrase': 'phoque'}],
@@ -61,13 +61,13 @@ def dessine_fond_qui_scroll():
 def intro():
     text_blink = 0.0
     while not input.key_press(gs.InputDevice.KeyEnter):
-        render.clear()
+        render.clear(gs.Color.White)
         text_blink += clock.update()
         if text_blink > 1.0:
             text_blink = 0.0
 
         # Effet de background animé à la "Street Fighter" (hem)
-        dessine_fond_qui_scroll()
+        # dessine_fond_qui_scroll()
 
         afficheTexte(500, 400, 'Quel est ton gourou ?', size = 2)
         afficheTexte(500, 365, 'Choisis le sens de ta vie ~~~~~~~~~~~~~~')
@@ -104,8 +104,8 @@ def selection():
         entrer = False
 
         while not entrer:
-            render.clear()
-            dessine_fond_qui_scroll()
+            render.clear(gs.Color.White)
+            # dessine_fond_qui_scroll()
 
             if input.key_press(gs.InputDevice.KeyLeft) and indexDecor > 0:
                 indexDecor = (indexDecor - 1)%getImgParPha(phases)
@@ -114,8 +114,18 @@ def selection():
                 indexDecor = (indexDecor + 1)%getImgParPha(phases)
 
             if indexDecor >= 0:
-                afficheImage(1200, 300, phase, 0.5, indexDecor)
-                afficheTexte(1200, 200, getTxt(phases, phase, indexDecor))
+                afficheImage(900, 300, phase, 0.5, indexDecor)
+                afficheTexte(1200, 250, getTxt(phases, phase, indexDecor))
+                render.set_blend_mode2d(1)
+                afficheImageNot(800, 700,  0.5, '@data/ornement_gauche.png')
+                afficheImageNot(1320, 700,  0.5, '@data/ornement_droite.png')
+                render.set_blend_mode2d(0)
+                if phase == 0:
+
+                    afficheTexte(1000, 700, 'Où veux tu te retirer ?')
+                    render.set_blend_mode2d(1)
+                    afficheImageNot(700, 100,  1, '@data/choix_paysage.png')
+                    render.set_blend_mode2d(0)
 
             if input.key_press(gs.InputDevice.KeyEnter):
                 print(indexDecor)
@@ -130,9 +140,13 @@ def selection():
             if phase > 0:
                 for index in range(len(indexImg)):
                     if index != 2:
+                        render.set_blend_mode2d(1)
                         afficheImage(100+(600*(index)), 400, index , 0.6, indexImg[index])
+                        render.set_blend_mode2d(0)
                     else:
+                        render.set_blend_mode2d(1)
                         afficheImage(450, 100, index , 0.6, indexImg[index])
+                        render.set_blend_mode2d(0)
 
             render.flip()
         render.flip()
@@ -148,18 +162,21 @@ def afficheTexte(x, y, texte, transparence = 1.0, size = 1.0):
         if c == ' ':
             x += 5 * size
         else:
-            render.text2d(x, y, c, 30 * size, gs.Color(1.0, 1.0, 1.0, transparence), '@data/monof55.ttf')
+            render.text2d(x, y, c, 30 * size, gs.Color.Blue, '@data/monof55.ttf')
             x += 15 * size
 
 
 def afficheImage(x, y ,phase, echelle, phraseCourante):
         render.image2d(x,y,echelle,getImg(phases, phase, phraseCourante) )
 
+def afficheImageNot(x, y, echelle, lien):
+    render.image2d(x,y,echelle,lien )
+
 
 def generation(gourou):
     while not input.key_press(gs.InputDevice.KeyEnter):
-        render.clear()
-        dessine_fond_qui_scroll()
+        render.clear(gs.Color.White)
+        # dessine_fond_qui_scroll()
 
         afficheTexte(800, 500, 'Voyons désormais quel est votre Gourou ....')
         render.image2d(200,250,0.7,'@data/Guru.jpg' )
@@ -167,8 +184,8 @@ def generation(gourou):
     render.flip()
 
     while not input.key_press(gs.InputDevice.KeyEnter):
-        render.clear()
-        dessine_fond_qui_scroll()
+        render.clear(gs.Color.White)
+        # dessine_fond_qui_scroll()
         afficheTexte(1000, 500, 'Il était un fois dans'+str(getTxt(phases,0,indexImg[0] )))
         afficheTexte(1050, 400, 'Un petit '+str(getTxt(phases,1,indexImg[1])))
         afficheTexte(1100, 300, 'Qui regarda '+str(getTxt(phases,2,indexImg[2] )))
