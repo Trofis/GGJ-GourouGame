@@ -4,6 +4,7 @@ import gs.plus.input as input
 import gs.plus.audio as audio
 import gs.plus.clock as clock
 from gs.plus import *
+import random
 
 dt_text_scroll = 0.0
 
@@ -25,6 +26,12 @@ gs.MountFileDriver(gs.StdFileDriver("assets"), '@data')
 
 audio.init()
 sound = audio.get_mixer().Stream("@data/haters.ogg")
+
+def joue_sfx_selection():
+    audio.get_mixer().Stream("@data/sfx_select_" + str(random.randint(0,3)) + ".wav")
+
+def joue_sfx_phase():
+    audio.get_mixer().Stream("@data/sfx_phase_" + str(random.randint(0,3)) + ".wav")
 
 def main ():
     intro()
@@ -85,6 +92,8 @@ def selection():
     indexImg = {}
     for phase in range(len(phases)):
 
+        joue_sfx_phase()
+
         while not input.key_press(gs.InputDevice.KeyEnter):
             render.clear()
             dessine_fond_qui_scroll()
@@ -116,6 +125,9 @@ def selection():
 
             render.flip()
         render.flip()
+
+        # prochaine phase, on joue un son de "selection"
+        joue_sfx_selection()
 
     return Gourou
 
