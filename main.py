@@ -16,9 +16,15 @@ phases = [
          {'img': '@data/foret.png', 'phrase': "sous les chênes"},
          {'img': "@data/plage.png", 'phrase': ' sous les cocos '}
            ],
-        [{'img': '@data/chat.jpg', 'phrase': 'chat'},
-             {'img': '@data/phoque.jpg', 'phrase': 'phoque'},
-             {'img': '@data/phoque2.jpg', 'phrase': 'phoque'}],
+        [   {'img': '@data/chat.jpg', 'phrase': 'chat'},
+            {'img': '@data/phoque.jpg', 'phrase': 'phoque'},
+            {'img': '@data/phoque2.jpg', 'phrase': 'phoque'},
+            {'img': '@data/phoque.jpg', 'phrase': 'phoque'},
+            {'img': '@data/phoque2.jpg', 'phrase': 'phoque'},
+            {'img': '@data/phoque.jpg', 'phrase': 'phoque'},
+            {'img': '@data/phoque2.jpg', 'phrase': 'phoque'},
+            {'img': '@data/phoque.jpg', 'phrase': 'phoque'},
+            {'img': '@data/phoque2.jpg', 'phrase': 'phoque'}],
         [{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
          {'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
          {'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}]
@@ -123,10 +129,10 @@ def selection():
                 amplitude = 1
 
             if indexDecor >= 0:
-
+                print(indexDecor)
                 amplitude *= 0.95
-                afficheImage((SCREEN_W-1050)/2, 285+random.randint(-25,25)*amplitude, phase, 1.0, indexDecor)
-                yOffSet = [0,0,0]
+
+                yOffSet = [0,0,0]*3**phase
                 yOffSet [indexDecor] = random.randint(-5,5)
 
                 render.set_blend_mode2d(1)
@@ -134,7 +140,7 @@ def selection():
                 afficheImageNot(1090, 165 + 25,  1, '@data/ornement_droite.png')
                 render.set_blend_mode2d(0)
                 if phase == 0:
-
+                    afficheImage((SCREEN_W-1050)/2, 285+random.randint(-25,25)*amplitude, phase, 1.0, indexDecor)
                     afficheTexte(800, 220 + 25, 'OÙ VEUX TU TE RETIRER ?', size=0.85)
                     render.set_blend_mode2d(1)
                     afficheImageNot(600, 50,  1, '@data/choix_paysage.png')
@@ -144,27 +150,30 @@ def selection():
                     afficheTexte(1100, 25+yOffSet[2], getTxt(phases, phase, 2))
 
                 elif phase == 1:
+                    afficheImage((SCREEN_W-1050)/2, 285+random.randint(-25,25)*amplitude, phase, 1.0, (indexDecor+indexImg[phase-1])*3)
                     afficheTexte(750, 220 + 25, 'CHOISIS UNE AMBIANCE MYSTIQUE', size=0.85)
                     render.set_blend_mode2d(1)
-                    afficheImageNot(600, 50,  1, '@data/choix_paysage.png')
+                    afficheImageNot(600, 50,  1, '@data/choix_ambiance.png')
                     render.set_blend_mode2d(0)
-                    afficheTexte(670, 25+yOffSet[0], getTxt(phases, phase, 0))
-                    afficheTexte(900, 25+yOffSet[1], getTxt(phases, phase, 1))
-                    afficheTexte(1180, 25+yOffSet[2], getTxt(phases, phase, 2))
+                    print ((indexImg[phase-1]+1)*3)
+                    afficheTexte(670, 25+yOffSet[0+(indexImg[phase-1])*3], getTxt(phases, phase, 0+(indexImg[phase-1])*3))
+                    afficheTexte(900, 25+yOffSet[1+(indexImg[phase-1])*3], getTxt(phases, phase, 1+(indexImg[phase-1])*3))
+                    afficheTexte(1180, 25+yOffSet[2+(indexImg[phase-1])*3], getTxt(phases, phase, 2+(indexImg[phase-1])*3))
 
                 else:
+                    afficheImage((SCREEN_W-1050)/2, 285+random.randint(-25,25)*amplitude, phase, 1.0, indexDecor)
                     afficheTexte(700, 220 + 25, 'CHOISIS UN TRUC A OBSERVER', size=0.85)
                     render.set_blend_mode2d(1)
                     afficheImageNot(600, 50,  1, '@data/choix_paysage.png')
                     render.set_blend_mode2d(0)
 
             if input.key_press(gs.InputDevice.KeyEnter):
-                print(indexDecor)
+
                 entrer = True
                 indexEntrer = indexDecor
                 Gourou.append(getTxt(phases, phase, indexDecor))
             if entrer:
-                print(indexImg)
+
                 indexImg[phase] = indexEntrer
 
 
@@ -198,7 +207,7 @@ def afficheTexte(x, y, texte, transparence = 1.0, size = 1.0):
 
 
 def afficheImage(x, y ,phase, echelle, phraseCourante):
-        render.image2d(x,y,echelle,getImg(phases, phase, phraseCourante) )
+    render.image2d(x,y,echelle,getImg(phases, phase, phraseCourante) )
 
 def afficheImageNot(x, y, echelle, lien):
     render.image2d(x,y,echelle,lien )
