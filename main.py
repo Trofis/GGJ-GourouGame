@@ -3,7 +3,8 @@ import gs.plus.render as render
 import gs.plus.input as input
 
 phases = [[{'img' : "@data/place_desert.png", 'phrase':'Il fait chaud !'}, {'img' : '@data/place_espace.png', 'phrase':'Ohh il fait beau'}, {'img' : '@data/place_montagne.png', 'phrase':'On va faire du ski ?'}],[
-        {'img' : '@data/chat.jpg', 'phrase':'Ohh le chattt'} , {'img' : '@data/phoque.jpg', 'phrase':'Trop mignon le phoque'}, {'img' : '@data/phoque2.jpg', 'phrase':'ohh je préfère celui-ci'}]]
+        {'img' : '@data/chat.jpg', 'phrase':'Ohh le chattt'} , {'img' : '@data/phoque.jpg', 'phrase':'Trop mignon le phoque'}, {'img' : '@data/phoque2.jpg', 'phrase':'ohh je préfère celui-ci'}],
+          [ {'img' : '@data/soleil.jpg', 'phrase':'Il fait beau'},{'img' : '@data/Pluie.jpg', 'phrase':'Ohh mince il pleut'},{'img' : '@data/arcEnCiel.jpg', 'phrase':'Après la pluie le beau temps'}] ]
 
 gs.LoadPlugins(gs.get_default_plugins_path())
 render.init(1920, 1080, "pkg.core")
@@ -51,7 +52,7 @@ def selection():
                 afficheImage(1200,300, phase, 0.5, indexDecor)
                 afficheTexte(1200,200, getTxt(phases, phase,indexDecor ))
 
-            if input.key_press(gs.InputDevice.KeyEnter):
+            if input.key_press(gs.InputDevice.KeyEnter) :
                 entrer = True
                 indexEntrer = indexDecor
                 Gourou.append(getTxt(phases,phase, indexDecor))
@@ -60,9 +61,11 @@ def selection():
                 entrer = False
 
             if phase > 0:
-                print(indexImg)
                 for index in range(len(indexImg)):
-                    afficheImage(100+(600*(index)),400,index , 0.7, indexImg[index])
+                    if index != 2:
+                        afficheImage(100+(600*(index)),400,index , 0.6, indexImg[index])
+                    else:
+                        afficheImage(450,100,index , 0.6, indexImg[index])
 
             render.flip()
         render.flip()
@@ -77,12 +80,14 @@ def generation(gourou):
     while not input.key_press(gs.InputDevice.KeyEnter):
         render.clear()
         afficheTexte(1000, 500, 'Voyons désormais quel est votre Gourou ....')
+        render.image2d(200,250,0.7,'@data/Guru.jpg' )
         render.flip()
     render.flip()
 
     while not input.key_press(gs.InputDevice.KeyEnter):
         render.clear()
         afficheTexte(1000, 500, 'lol')
+        render.image2d(200,250,0.7,'@data/Guru.jpg' )
         render.flip()
     render.flip()
 
