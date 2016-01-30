@@ -12,9 +12,10 @@ SCREEN_H = 1080
 dt_text_scroll = 0.0
 
 phases = [
-        [{'img': "@data/plage.png", 'phrase': ' sous les cocos '},
-           {'img': '@data/foret.png', 'phrase': "sous les chênes"},
-           {'img': '@data/montagne.png', 'phrase': 'sous la neige'}],
+        [{'img': '@data/montagne.png', 'phrase': 'sous la neige'},
+         {'img': '@data/foret.png', 'phrase': "sous les chênes"},
+         {'img': "@data/plage.png", 'phrase': ' sous les cocos '}
+           ],
         [{'img': '@data/chat.jpg', 'phrase': 'chat'},
              {'img': '@data/phoque.jpg', 'phrase': 'phoque'},
              {'img': '@data/phoque2.jpg', 'phrase': 'phoque'}],
@@ -35,10 +36,10 @@ def musique():
 
 
 def joue_sfx_selection():
-    audio.get_mixer().Stream("@data/sfx_select_" + str(random.randint(0,3)) + ".wav")
+    audio.get_mixer().Stream("@data/sfx_select_" + str(random.randint(0,5)) + ".wav")
 
 def joue_sfx_phase():
-    audio.get_mixer().Stream("@data/sfx_phase_" + str(random.randint(0,3)) + ".wav")
+    audio.get_mixer().Stream("@data/sfx_phase_" + str(random.randint(0,4)) + ".wav")
 
 def main ():
     musique()
@@ -99,12 +100,13 @@ def selection():
     Gourou = []
     indexDecor = 0
     indexEntrer = -1
-
+    amplitude = 1
     indexImg = {}
     for phase in range(len(phases)):
 
         joue_sfx_phase()
         entrer = False
+
 
         while not entrer:
             render.clear(gs.Color.White)
@@ -112,13 +114,21 @@ def selection():
 
             if input.key_press(gs.InputDevice.KeyLeft) and indexDecor > 0:
                 indexDecor = (indexDecor - 1)%getImgParPha(phases)
+                joue_sfx_selection()
+                amplitude = 1
 
             if input.key_press(gs.InputDevice.KeyRight) and indexDecor < getImgParPha(phases)-1:
                 indexDecor = (indexDecor + 1)%getImgParPha(phases)
+                joue_sfx_selection()
+                amplitude = 1
 
             if indexDecor >= 0:
-                afficheImage((SCREEN_W-964)/2, 285, phase, 1.0, indexDecor)
-                afficheTexte(1200, 250, getTxt(phases, phase, indexDecor))
+
+                amplitude *= 0.95
+                afficheImage((SCREEN_W-1050)/2, 285+random.randint(-25,25)*amplitude, phase, 1.0, indexDecor)
+                yOffSet = [0,0,0]
+                yOffSet [indexDecor] = random.randint(-5,5)
+
                 render.set_blend_mode2d(1)
                 afficheImageNot(430, 165 + 25,  1, '@data/ornement_gauche.png')
                 afficheImageNot(1090, 165 + 25,  1, '@data/ornement_droite.png')
@@ -127,7 +137,25 @@ def selection():
 
                     afficheTexte(800, 220 + 25, 'OÙ VEUX TU TE RETIRER ?', size=0.85)
                     render.set_blend_mode2d(1)
-                    afficheImageNot(700, 100,  1, '@data/choix_paysage.png')
+                    afficheImageNot(600, 50,  1, '@data/choix_paysage.png')
+                    render.set_blend_mode2d(0)
+                    afficheTexte(600, 25+yOffSet[0], getTxt(phases, phase, 0))
+                    afficheTexte(830, 25+yOffSet[1], getTxt(phases, phase, 1))
+                    afficheTexte(1100, 25+yOffSet[2], getTxt(phases, phase, 2))
+
+                elif phase == 1:
+                    afficheTexte(750, 220 + 25, 'CHOISIS UNE AMBIANCE MYSTIQUE', size=0.85)
+                    render.set_blend_mode2d(1)
+                    afficheImageNot(600, 50,  1, '@data/choix_paysage.png')
+                    render.set_blend_mode2d(0)
+                    afficheTexte(670, 25+yOffSet[0], getTxt(phases, phase, 0))
+                    afficheTexte(900, 25+yOffSet[1], getTxt(phases, phase, 1))
+                    afficheTexte(1180, 25+yOffSet[2], getTxt(phases, phase, 2))
+
+                else:
+                    afficheTexte(700, 220 + 25, 'CHOISIS UN TRUC A OBSERVER', size=0.85)
+                    render.set_blend_mode2d(1)
+                    afficheImageNot(600, 50,  1, '@data/choix_paysage.png')
                     render.set_blend_mode2d(0)
 
             if input.key_press(gs.InputDevice.KeyEnter):
@@ -140,16 +168,16 @@ def selection():
                 indexImg[phase] = indexEntrer
 
 
-            if phase > 0:
-                for index in range(len(indexImg)):
-                    if index != 2:
-                        render.set_blend_mode2d(1)
-                        afficheImage(100+(600*(index)), 400, index , 0.6, indexImg[index])
-                        render.set_blend_mode2d(0)
-                    else:
-                        render.set_blend_mode2d(1)
-                        afficheImage(450, 100, index , 0.6, indexImg[index])
-                        render.set_blend_mode2d(0)
+            # if phase > 0:
+            #     for index in range(len(indexImg)):
+            #         if index != 2:
+            #             render.set_blend_mode2d(1)
+            #             afficheImage(100+(600*(index)), 400, index , 0.6, indexImg[index])
+            #             render.set_blend_mode2d(0)
+            #         else:
+            #             render.set_blend_mode2d(1)
+            #             afficheImage(450, 100, index , 0.6, indexImg[index])
+            #             render.set_blend_mode2d(0)
 
             render.flip()
         render.flip()
