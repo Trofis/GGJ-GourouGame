@@ -9,23 +9,27 @@ import random
 dt_text_scroll = 0.0
 
 phases = [
-        [{'img': "@data/place_desert.png", 'phrase': 'Il fait chaud !'},
-           {'img': '@data/place_espace.png', 'phrase': 'Ohh il fait beau'},
-           {'img': '@data/place_montagne.png', 'phrase': 'On va faire du ski ?'}],
-        [{'img': '@data/chat.jpg', 'phrase': 'Ohh le chattt'},
-             {'img': '@data/phoque.jpg', 'phrase': 'Trop mignon le phoque'},
-             {'img': '@data/phoque2.jpg', 'phrase': 'ohh je préfère celui-ci'}],
-        [{'img': '@data/soleil.jpg', 'phrase': 'Il fait beau'},
-         {'img': '@data/Pluie.jpg', 'phrase': 'Ohh mince il pleut'},
-         {'img': '@data/arcEnCiel.jpg', 'phrase': 'Après la pluie le beau temps'}]
+        [{'img': "@data/place_desert.png", 'phrase': ' un desert '},
+           {'img': '@data/place_espace.png', 'phrase': "l'espace"},
+           {'img': '@data/place_montagne.png', 'phrase': 'la montagne'}],
+        [{'img': '@data/chat.jpg', 'phrase': 'chat'},
+             {'img': '@data/phoque.jpg', 'phrase': 'phoque'},
+             {'img': '@data/phoque2.jpg', 'phrase': 'phoque'}],
+        [{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
+         {'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
+         {'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}]
     ]
 
 gs.LoadPlugins(gs.get_default_plugins_path())
 render.init(1920, 1080, "pkg.core")
 gs.MountFileDriver(gs.StdFileDriver("assets"), '@data')
+gs.MountFileDriver(gs.StdFileDriver("pkg.core"), "@core")
 
-audio.init()
-sound = audio.get_mixer().Stream("@data/haters.ogg")
+def musique():
+    global sound
+    audio.init()
+    sound = audio.get_mixer().Stream("@data/haters.ogg")
+
 
 def joue_sfx_selection():
     audio.get_mixer().Stream("@data/sfx_select_" + str(random.randint(0,3)) + ".wav")
@@ -34,9 +38,12 @@ def joue_sfx_phase():
     audio.get_mixer().Stream("@data/sfx_phase_" + str(random.randint(0,3)) + ".wav")
 
 def main ():
+    musique()
     intro()
     gourou = selection()
     generation(gourou)
+    audio.get_mixer().Stop(sound)
+    final()
 
 
 # Cette fonction peut être appelée de partout
@@ -62,11 +69,11 @@ def intro():
         # Effet de background animé à la "Street Fighter" (hem)
         dessine_fond_qui_scroll()
 
-        afficheTexte(500, 400,'Quel est ton gourou ?', size = 2)
-        afficheTexte(500, 365,'Choisis le sens de ta vie ~~~~~~~~~~~~~~')
-        afficheTexte(500, 325,'...et appuie sur [enter]', text_blink)
+        afficheTexte(500, 400, 'Quel est ton gourou ?', size = 2)
+        afficheTexte(500, 365, 'Choisis le sens de ta vie ~~~~~~~~~~~~~~')
+        afficheTexte(500, 325, '...et appuie sur [enter]', text_blink)
         render.flip()
-    # render.flip()
+
 
     while input.key_press(gs.InputDevice.KeyEnter):
         render.clear()
@@ -85,16 +92,18 @@ def getTxt(phases, phase, phrase_courante):
 
 
 def selection():
+    global indexImg
     Gourou = []
     indexDecor = 0
     indexEntrer = -1
-    entrer = False
+
     indexImg = {}
     for phase in range(len(phases)):
 
         joue_sfx_phase()
+        entrer = False
 
-        while not input.key_press(gs.InputDevice.KeyEnter):
+        while not entrer:
             render.clear()
             dessine_fond_qui_scroll()
 
@@ -109,12 +118,14 @@ def selection():
                 afficheTexte(1200, 200, getTxt(phases, phase, indexDecor))
 
             if input.key_press(gs.InputDevice.KeyEnter):
+                print(indexDecor)
                 entrer = True
                 indexEntrer = indexDecor
                 Gourou.append(getTxt(phases, phase, indexDecor))
             if entrer:
+                print(indexImg)
                 indexImg[phase] = indexEntrer
-                entrer = False
+
 
             if phase > 0:
                 for index in range(len(indexImg)):
@@ -153,13 +164,84 @@ def generation(gourou):
         afficheTexte(800, 500, 'Voyons désormais quel est votre Gourou ....')
         render.image2d(200,250,0.7,'@data/Guru.jpg' )
         render.flip()
-    # render.flip()
+    render.flip()
 
     while not input.key_press(gs.InputDevice.KeyEnter):
         render.clear()
-        afficheTexte(1000, 500, 'lol')
+        dessine_fond_qui_scroll()
+        afficheTexte(1000, 500, 'Il était un fois dans'+str(getTxt(phases,0,indexImg[0] )))
+        afficheTexte(1050, 400, 'Un petit '+str(getTxt(phases,1,indexImg[1])))
+        afficheTexte(1100, 300, 'Qui regarda '+str(getTxt(phases,2,indexImg[2] )))
         render.image2d(200,250,0.7,'@data/Guru.jpg' )
         render.flip()
-    # render.flip()
+    render.flip()
+
+
+def final():
+
+    while not input.key_press(gs.InputDevice.KeyEnter):
+        render.clear()
+
+
+        # initialize graphic and audio systems
+
+        movie = gs.WebMMovie()
+        movie.Open("@data/thriftShop.webm")
+
+        video_format = movie.GetVideoData().GetFormat()
+
+        # create the frame textures and frame object
+        gpu = render.get_renderer()
+        y_tex = gpu.NewTexture()
+        gpu.CreateTexture(y_tex, video_format.width, video_format.height, gs.GpuTexture.R8, gs.GpuTexture.NoAA, gs.GpuTexture.UsageDefault, False)
+        u_tex = gpu.NewTexture()
+        gpu.CreateTexture(u_tex, video_format.width // 2, video_format.height // 2, gs.GpuTexture.R8, gs.GpuTexture.NoAA, gs.GpuTexture.UsageDefault, False)
+        v_tex = gpu.NewTexture()
+        gpu.CreateTexture(v_tex, video_format.width // 2, video_format.height // 2, gs.GpuTexture.R8, gs.GpuTexture.NoAA, gs.GpuTexture.UsageDefault, False)
+
+        frame = gs.VideoFrame()
+        video_format.ClearFrame(frame)
+        video_timestamp = gs.time(0)  # assume first frame time stamp is 0
+
+        # load the YV12 to RGB shader and setup drawing states
+        shader = gpu.LoadShader("@data/yv12.isl")
+
+        gpu.EnableDepthTest(False)  # disable depth testing so that we don't even need to clear the z-buffer
+
+        # start streaming the movie audio data
+        channel = audio.get_mixer().StreamData(movie.GetAudioData())
+
+        # play until movie ends
+        while not movie.IsEOF():
+            render.clear()
+            # fit the while output window
+            screen_size = gpu.GetCurrentOutputWindow().GetSize()
+            gpu.SetViewport(gs.fRect(0, 0, screen_size.x, screen_size.y))
+            gpu.Set2DMatrices()  # update the 2d matrix
+
+            # fetch the next video frame once audio gets past video
+            audio_timestamp = audio.get_mixer().GetChannelPosition(channel)  # audio timestamp as reported by the mixer
+
+            if audio_timestamp >= video_timestamp:
+                movie.GetVideoData().GetFrame(frame)
+                video_timestamp = frame.GetTimestamp()
+                gpu.BlitTexture(y_tex, frame.GetPlaneData(gs.VideoFrame.Y), video_format.width, video_format.height)
+                gpu.BlitTexture(u_tex, frame.GetPlaneData(gs.VideoFrame.U), video_format.width // 2, video_format.height // 2)
+                gpu.BlitTexture(v_tex, frame.GetPlaneData(gs.VideoFrame.V), video_format.width // 2, video_format.height // 2)
+
+                # draw the current video frame to screen
+                vtxs = [gs.Vector3(0, 0, 0.5), gs.Vector3(0, screen_size.y, 0.5), gs.Vector3(screen_size.x, screen_size.y, 0.5), gs.Vector3(0, 0, 0.5), gs.Vector3(screen_size.x, screen_size.y, 0.5), gs.Vector3(screen_size.x, 0, 0.5)]
+                uvs = [gs.Vector2(0, 1), gs.Vector2(0, 0), gs.Vector2(1, 0), gs.Vector2(0, 1), gs.Vector2(1, 0), gs.Vector2(1, 1)]
+            render_system = render.get_render_system()
+            gpu.SetShader(shader)
+            gs.SetShaderEngineValues(render_system)
+            gpu.SetShaderTexture("y_tex", y_tex)
+            gpu.SetShaderTexture("u_tex", u_tex)
+            gpu.SetShaderTexture("v_tex", v_tex)
+            render_system.DrawTriangleUV(2, vtxs, uvs)
+            render.flip()
+        render.flip()
+    render.flip()
+
 
 main()
