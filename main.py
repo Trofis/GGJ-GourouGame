@@ -14,47 +14,77 @@ SCREEN_H = 1080
 dt_text_scroll = 0.0
 
 phases = [
-		[[{'img': '@data/montagne.png', 'phrase': 'sous la neige'},
-		 {'img': '@data/foret.png', 'phrase': "sous les chênes"},
-		 {'img': "@data/mer.png", 'phrase': ' sous les cocos '}]
-		   ],
-		[  [ {'img': '@data/montagne_plus_groupedanimaux.png', 'phrase': 'Un groupe d\'animaux'},
-			{'img': '@data/montagne_plus_halucination.png', 'phrase': 'Des hallucinations'},
-			{'img': '@data/montagne_plus_groupedhumains.png', 'phrase': 'Un groupe d\'humains'}],
-			[{'img': '@data/foret_plus_groupedanimaux.png', 'phrase': 'Un groupe d\'animaux'},
-			{'img': '@data/foret_plus_hallucination.png', 'phrase': 'Des hallucinations'},
-			{'img': '@data/foret_plus_groupedhumains.png', 'phrase': 'Un groupe d\'humains'}],
-			[{'img': '@data/mer_plus_groupedanimaux.png', 'phrase': 'Un groupe d\'animaux'},
-			{'img': '@data/mer_plus_hallucination.png', 'phrase': 'Des hallucinations'},
-			{'img': '@data/mer_plus_groupedhumains.png', 'phrase': 'Un groupe d\'humains'}]],
-		[[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
-		 {'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
-		 {'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}],
-		 [{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
-		 {'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
-		 {'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}],
-		 [{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
-		 {'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
-		 {'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}],
-		 [{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
-		 {'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
-		 {'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}],
-		 [{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
-		 {'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
-		 {'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}],
-		 [{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
-		 {'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
-		 {'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}],
-		[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
-		 {'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
-		 {'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}],
-		[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
-		 {'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
-		 {'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}],
-		[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
-		 {'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
-		 {'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}],
-	]]
+			[
+				[{'img': '@data/montagne.png', 'phrase': 'sous la neige'},
+				{'img': '@data/foret.png', 'phrase': "sous les chênes"},
+				{'img': "@data/mer.png", 'phrase': ' sous les cocos '}
+				]
+			],
+
+			[
+				[{'img': '@data/montagne_plus_groupedanimaux.png', 'phrase': 'Un groupe d\'animaux'},
+				{'img': '@data/montagne_plus_halucination.png', 'phrase': 'Des hallucinations'},
+				{'img': '@data/montagne_plus_groupedhumains.png', 'phrase': 'Un groupe d\'humains'}
+				],
+
+				[{'img': '@data/foret_plus_groupedanimaux.png', 'phrase': 'Un groupe d\'animaux'},
+				{'img': '@data/foret_plus_hallucination.png', 'phrase': 'Des hallucinations'},
+				{'img': '@data/foret_plus_groupedhumains.png', 'phrase': 'Un groupe d\'humains'}
+				],
+
+				[{'img': '@data/mer_plus_groupedanimaux.png', 'phrase': 'Un groupe d\'animaux'},
+				{'img': '@data/mer_plus_hallucination.png', 'phrase': 'Des hallucinations'},
+				{'img': '@data/mer_plus_groupedhumains.png', 'phrase': 'Un groupe d\'humains'}
+				]
+			],
+
+			[
+				[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
+				{'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
+				{'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}
+				],
+
+				[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
+				{'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
+				{'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}
+				],
+
+				[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
+				{'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
+				{'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}
+				],
+
+				[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
+				{'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
+				{'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}
+				],
+
+				[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
+				{'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
+				{'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}
+				],
+
+				[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
+				{'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
+				{'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}
+				],
+
+				[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
+				{'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
+				{'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}
+				],
+
+				[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
+				{'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
+				{'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}
+				],
+
+				[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
+				{'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
+				{'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}
+				],
+			]
+		]
 
 gs.LoadPlugins(gs.get_default_plugins_path())
 render.init(SCREEN_W, SCREEN_H, "pkg.core")
@@ -79,8 +109,8 @@ def main ():
 	intro()
 	angle = 0
 	cube = render.create_geometry(geometry.create_cone(subdiv_x=4))
-	gourou = selection()
-	generation(gourou)
+	gourou, gourou_index_list = selection()
+	generation(gourou, gourou_index_list)
 	audio.get_mixer().Stop(sound)
 	final()
 
@@ -133,6 +163,7 @@ def getTxt(phases, phase,jeuCarte, phrase_courante):
 def selection():
 	global indexImg
 	Gourou = []
+	gourou_index_list = []
 	indexDecor = 0
 	indexEntrer = -1
 	amplitude = 1
@@ -163,7 +194,7 @@ def selection():
 
 			yOffSet = [0, 0, 0]
 
-			print(indexDecor)
+			# print(indexDecor)
 			render.set_blend_mode2d(1)
 			afficheImageNot(430, 165 + 25,  1, '@data/ornement_gauche.png')
 			afficheImageNot(1090, 165 + 25,  1, '@data/ornement_droite.png')
@@ -186,7 +217,7 @@ def selection():
 				render.set_blend_mode2d(1)
 				afficheImageNot(600, 50,  1, '@data/choix_ambiance.png')
 				render.set_blend_mode2d(0)
-				print(indexImg)
+				# print(indexImg)
 
 				if indexDecor == 0:
 					afficheTexte(620, 25+yOffSet[0], getTxt(phases, phase, indexImg[phase-1], indexDecor), size=0.75)
@@ -217,6 +248,7 @@ def selection():
 			angle += 0.01
 			if input.key_press(gs.InputDevice.KeyEnter):
 
+				gourou_index_list.append(indexDecor)
 				entrer = True
 				indexEntrer = indexDecor
 				if phase ==0:
@@ -226,7 +258,6 @@ def selection():
 
 			if entrer:
 				indexImg[phase] = indexEntrer
-
 
 			# if phase > 0:
 			#     for index in range(len(indexImg)):
@@ -245,7 +276,8 @@ def selection():
 		# prochaine phase, on joue un son de "selection"
 		joue_sfx_selection()
 
-	return Gourou
+	return Gourou, gourou_index_list
+
 
 def afficheTexte(x, y, texte, transparence = 1.0, size = 1.0):
 	# Ugly patch, waiting for a fix of the font kerning ^__^;
@@ -264,7 +296,8 @@ def afficheImageNot(x, y, echelle, lien):
 	render.image2d(x,y,echelle,lien )
 
 
-def generation(gourou):
+def generation(gourou, gourou_index_list):
+	print(gourou_index_list)
 	while not input.key_press(gs.InputDevice.KeyEnter):
 		render.clear(gs.Color.White)
 		# dessine_fond_qui_scroll()
@@ -277,8 +310,8 @@ def generation(gourou):
 	while not input.key_press(gs.InputDevice.KeyEnter):
 		render.clear(gs.Color.White)
 		# dessine_fond_qui_scroll()
-		afficheTexte(1000, 500, 'Il était un fois dans'+str(getTxt(phases,0,0 ,indexImg[0])))
-		afficheTexte(1050, 400, 'Un petit '+str(getTxt(phases,1,indexImg[0],indexImg[1])))
+		afficheTexte(1000, 500, 'Il était un fois '+str(getTxt(phases,0,0 ,indexImg[0])))
+		afficheTexte(1050, 400, 'Au coeur '+str(getTxt(phases,1,indexImg[0],indexImg[1])))
 		afficheTexte(1100, 300, 'Qui regarda '+str(getTxt(phases,2,indexImg[1], indexImg[2] )))
 		render.image2d(200,250,0.7,'@data/Guru.jpg' )
 		render.flip()
