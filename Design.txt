@@ -1,0 +1,66 @@
+Phases : 2
+
+Phase 1 --> paysage 
+
+phase 2 --> habitat
+
+phase 3 --> ambiance
+
+Chaque phase 
+
+index_phase = 0 # 0, 1 ou 2
+index_selection_image = [-1,-1,-1] # 0, 1, 2, ... dépend du nombre d'images
+
+index_selection_image[index_phase] += 1
+
+phases = [
+	# Phase 0
+	[
+		[	{'img':'montagne.png', 'phrase':'il fait beau'},
+			{'img':'montagne.png', 'phrase':'il fait beau'},
+			{'img':'montagne.png', 'phrase':'il fait beau'}
+		]		
+	],
+
+	# Phase 1
+	[
+	],
+
+	# Phase 2
+	[
+	]
+
+]
+
+def main():
+	intro()
+	selection()
+	generation()
+
+
+def intro():
+	while(key_enter):
+		# afficher texte		
+		affiche('Quel est ton gourou ?')
+		affiche('Choisis le sens de ta vie')
+
+
+def affiche_selection():
+	for phase_courante in range(len(phases)):
+		# affiche image 
+		affiche_image(phase_courante * 110, 0, phases[phase_courante][index_selection_image[index_phase]]['img'])
+
+def selection():
+	for phrase_courante in range(len(phases)):
+		while(on ne presse pas enter):
+			affiche_selections()
+			# affiche l'image de l'index courant (index_selection_image[phrase_courante])
+			# teste clavier et incremente ou decremente index image
+			# affiche image courante (index_selection_image[phrase_courante])
+
+def generation():
+	final_str = ''
+	for phrase_courante in range(len(phases)):
+		final_str += phases[phrase_courante][index_selection_image[phrase_courante]]['phrase']
+	
+	
