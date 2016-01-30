@@ -1,4 +1,5 @@
 import gs
+import gs.plus.geometry as geometry
 import gs.plus.render as render
 import gs.plus.input as input
 import gs.plus.audio as audio
@@ -6,29 +7,54 @@ import gs.plus.clock as clock
 from gs.plus import *
 import random
 
+
 SCREEN_W = 1920
 SCREEN_H = 1080
 
 dt_text_scroll = 0.0
 
 phases = [
-        [{'img': '@data/montagne.png', 'phrase': 'sous la neige'},
+        [[{'img': '@data/montagne.png', 'phrase': 'sous la neige'},
          {'img': '@data/foret.png', 'phrase': "sous les chênes"},
-         {'img': "@data/plage.png", 'phrase': ' sous les cocos '}
+         {'img': "@data/mer.png", 'phrase': ' sous les cocos '}]
            ],
-        [   {'img': '@data/chat.jpg', 'phrase': 'chat'},
-            {'img': '@data/phoque.jpg', 'phrase': 'phoque'},
-            {'img': '@data/phoque2.jpg', 'phrase': 'phoque'},
-            {'img': '@data/phoque.jpg', 'phrase': 'phoque'},
-            {'img': '@data/phoque2.jpg', 'phrase': 'phoque'},
-            {'img': '@data/phoque.jpg', 'phrase': 'phoque'},
-            {'img': '@data/phoque2.jpg', 'phrase': 'phoque'},
-            {'img': '@data/phoque.jpg', 'phrase': 'phoque'},
-            {'img': '@data/phoque2.jpg', 'phrase': 'phoque'}],
+        [  [ {'img': '@data/montagne_plus_groupedanimaux.png', 'phrase': 'chat'},
+            {'img': '@data/montagne_plus_halucination.png', 'phrase': 'phoque'},
+            {'img': '@data/montagne_plus_groupedhumains.png', 'phrase': 'phoque'}],
+            [{'img': '@data/foret_plus_groupedanimaux.png', 'phrase': 'phoque'},
+            {'img': '@data/foret_plus_hallucination.png', 'phrase': 'phoque'},
+            {'img': '@data/foret_plus_groupedhumains.png', 'phrase': 'phoque'}],
+            [{'img': '@data/mer_plus_groupedanimaux.png', 'phrase': 'phoque'},
+            {'img': '@data/mer_plus_hallucination.png', 'phrase': 'phoque'},
+            {'img': '@data/mer_plus_groupedhumains.png', 'phrase': 'phoque'}]],
+        [[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
+         {'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
+         {'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}],
+         [{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
+         {'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
+         {'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}],
+         [{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
+         {'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
+         {'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}],
+         [{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
+         {'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
+         {'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}],
+         [{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
+         {'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
+         {'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}],
+         [{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
+         {'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
+         {'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}],
         [{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
          {'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
-         {'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}]
-    ]
+         {'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}],
+        [{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
+         {'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
+         {'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}],
+        [{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
+         {'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
+         {'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}],
+    ]]
 
 gs.LoadPlugins(gs.get_default_plugins_path())
 render.init(SCREEN_W, SCREEN_H, "pkg.core")
@@ -48,8 +74,11 @@ def joue_sfx_phase():
     audio.get_mixer().Stream("@data/sfx_phase_" + str(random.randint(0,4)) + ".wav")
 
 def main ():
+    global cube, angle
     musique()
     intro()
+    angle = 0
+    cube = render.create_geometry(geometry.create_cone(subdiv_x=4))
     gourou = selection()
     generation(gourou)
     audio.get_mixer().Stop(sound)
@@ -90,15 +119,15 @@ def intro():
         render.flip()
 
 def getImgParPha(phases):
-    return len(phases[0])
+    return len(phases[0] [0])
 
 
-def getImg(phases, phase, phrase_courante):
-    return phases[phase][phrase_courante]['img']
+def getImg(phases, phase,jeuCarte, phrase_courante):
+    return phases[phase] [jeuCarte] [phrase_courante]['img']
 
 
-def getTxt(phases, phase, phrase_courante):
-    return phases[phase][phrase_courante]['phrase']
+def getTxt(phases, phase,jeuCarte, phrase_courante):
+    return phases[phase] [jeuCarte] [phrase_courante]['phrase']
 
 
 def selection():
@@ -112,7 +141,7 @@ def selection():
 
         joue_sfx_phase()
         entrer = False
-
+        angle = 0
 
         while not entrer:
             render.clear(gs.Color.White)
@@ -129,51 +158,60 @@ def selection():
                 amplitude = 1
 
             if indexDecor >= 0:
-                print(indexDecor)
+                # render.geometry2d(100, 100, cube, angle, angle * 2, 0, 100)
                 amplitude *= 0.95
 
-                yOffSet = [0,0,0]*3**phase
+            yOffSet = [0,0,0]*3**phase
+
+            print(indexDecor)
+            render.set_blend_mode2d(1)
+            afficheImageNot(430, 165 + 25,  1, '@data/ornement_gauche.png')
+            afficheImageNot(1090, 165 + 25,  1, '@data/ornement_droite.png')
+            render.set_blend_mode2d(0)
+            if phase == 0:
                 yOffSet [indexDecor] = random.randint(-5,5)
-
+                afficheImage((SCREEN_W-1050)/2, 285+random.randint(-25,25)*amplitude, phase, 1.0, indexDecor, 0)
+                afficheTexte(800, 220 + 25, 'OÙ VEUX TU TE RETIRER ?', size=0.85)
                 render.set_blend_mode2d(1)
-                afficheImageNot(430, 165 + 25,  1, '@data/ornement_gauche.png')
-                afficheImageNot(1090, 165 + 25,  1, '@data/ornement_droite.png')
+                afficheImageNot(600, 50,  1, '@data/choix_paysage.png')
                 render.set_blend_mode2d(0)
-                if phase == 0:
-                    afficheImage((SCREEN_W-1050)/2, 285+random.randint(-25,25)*amplitude, phase, 1.0, indexDecor)
-                    afficheTexte(800, 220 + 25, 'OÙ VEUX TU TE RETIRER ?', size=0.85)
-                    render.set_blend_mode2d(1)
-                    afficheImageNot(600, 50,  1, '@data/choix_paysage.png')
-                    render.set_blend_mode2d(0)
-                    afficheTexte(600, 25+yOffSet[0], getTxt(phases, phase, 0))
-                    afficheTexte(830, 25+yOffSet[1], getTxt(phases, phase, 1))
-                    afficheTexte(1100, 25+yOffSet[2], getTxt(phases, phase, 2))
+                afficheTexte(600, 25+yOffSet[0], getTxt(phases, phase,0, 0))
+                afficheTexte(830, 25+yOffSet[1], getTxt(phases, phase,0, 1))
+                afficheTexte(1100, 25+yOffSet[2], getTxt(phases, phase,0, 2))
 
-                elif phase == 1:
-                    afficheImage((SCREEN_W-1050)/2, 285+random.randint(-25,25)*amplitude, phase, 1.0, (indexDecor+indexImg[phase-1])*3)
-                    afficheTexte(750, 220 + 25, 'CHOISIS UNE AMBIANCE MYSTIQUE', size=0.85)
-                    render.set_blend_mode2d(1)
-                    afficheImageNot(600, 50,  1, '@data/choix_ambiance.png')
-                    render.set_blend_mode2d(0)
-                    print ((indexImg[phase-1]+1)*3)
-                    afficheTexte(670, 25+yOffSet[0+(indexImg[phase-1])*3], getTxt(phases, phase, 0+(indexImg[phase-1])*3))
-                    afficheTexte(900, 25+yOffSet[1+(indexImg[phase-1])*3], getTxt(phases, phase, 1+(indexImg[phase-1])*3))
-                    afficheTexte(1180, 25+yOffSet[2+(indexImg[phase-1])*3], getTxt(phases, phase, 2+(indexImg[phase-1])*3))
+            elif phase == 1:
+                yOffSet [indexDecor*indexImg[phase-1]] = random.randint(-5,5)
+                afficheImage((SCREEN_W-1050)/2, 285+random.randint(-25,25)*amplitude, phase, 1.0, indexDecor,indexImg[phase-1] )
+                afficheTexte(750, 220 + 25, 'CHOISIS UNE AMBIANCE MYSTIQUE', size=0.85)
+                render.set_blend_mode2d(1)
+                afficheImageNot(600, 50,  1, '@data/choix_ambiance.png')
+                render.set_blend_mode2d(0)
+                print(indexImg)
+                afficheTexte(670, 25+yOffSet[0+(indexImg[phase-1])*3], getTxt(phases, phase, indexImg[phase-1], indexDecor))
+                afficheTexte(900, 25+yOffSet[1+(indexImg[phase-1])*3], getTxt(phases, phase, indexImg[phase-1],indexDecor))
+                afficheTexte(1180, 25+yOffSet[2+(indexImg[phase-1])*3], getTxt(phases, phase, indexImg[phase-1], indexDecor))
 
-                else:
-                    afficheImage((SCREEN_W-1050)/2, 285+random.randint(-25,25)*amplitude, phase, 1.0, indexDecor)
-                    afficheTexte(700, 220 + 25, 'CHOISIS UN TRUC A OBSERVER', size=0.85)
-                    render.set_blend_mode2d(1)
-                    afficheImageNot(600, 50,  1, '@data/choix_paysage.png')
-                    render.set_blend_mode2d(0)
-
+            else:
+                yOffSet [indexDecor*indexImg[phase-1]] = random.randint(-5,5)
+                afficheImage((SCREEN_W-1050)/2, 285+random.randint(-25,25)*amplitude, phase, 1.0, indexDecor, indexImg[phase-1])
+                afficheTexte(700, 220 + 25, 'CHOISIS UN TRUC A OBSERVER', size=0.85)
+                render.set_blend_mode2d(1)
+                afficheImageNot(600, 50,  1, '@data/choix_paysage.png')
+                render.set_blend_mode2d(0)
+                afficheTexte(670, 25+yOffSet[0+(indexImg[phase-1])*3], getTxt(phases, phase, indexImg[phase-1], indexDecor))
+                afficheTexte(900, 25+yOffSet[1+(indexImg[phase-1])*3], getTxt(phases, phase, indexImg[phase-1],indexDecor))
+                afficheTexte(1180, 25+yOffSet[2+(indexImg[phase-1])*3], getTxt(phases, phase, indexImg[phase-1], indexDecor))
+            angle += 0.01
             if input.key_press(gs.InputDevice.KeyEnter):
 
                 entrer = True
                 indexEntrer = indexDecor
-                Gourou.append(getTxt(phases, phase, indexDecor))
-            if entrer:
+                if phase ==0:
+                    Gourou.append(getTxt(phases, phase, 0, indexDecor))
+                else:
+                    Gourou.append(getTxt(phases, phase, indexImg[phase-1], indexDecor))
 
+            if entrer:
                 indexImg[phase] = indexEntrer
 
 
@@ -206,8 +244,8 @@ def afficheTexte(x, y, texte, transparence = 1.0, size = 1.0):
             x += 15 * size
 
 
-def afficheImage(x, y ,phase, echelle, phraseCourante):
-    render.image2d(x,y,echelle,getImg(phases, phase, phraseCourante) )
+def afficheImage(x, y ,phase, echelle, phraseCourante, jeuCarte):
+    render.image2d(x,y,echelle,getImg(phases, phase,jeuCarte, phraseCourante) )
 
 def afficheImageNot(x, y, echelle, lien):
     render.image2d(x,y,echelle,lien )
@@ -226,9 +264,9 @@ def generation(gourou):
     while not input.key_press(gs.InputDevice.KeyEnter):
         render.clear(gs.Color.White)
         # dessine_fond_qui_scroll()
-        afficheTexte(1000, 500, 'Il était un fois dans'+str(getTxt(phases,0,indexImg[0] )))
-        afficheTexte(1050, 400, 'Un petit '+str(getTxt(phases,1,indexImg[1])))
-        afficheTexte(1100, 300, 'Qui regarda '+str(getTxt(phases,2,indexImg[2] )))
+        afficheTexte(1000, 500, 'Il était un fois dans'+str(getTxt(phases,0,0 ,indexImg[0])))
+        afficheTexte(1050, 400, 'Un petit '+str(getTxt(phases,1,indexImg[0],indexImg[1])))
+        afficheTexte(1100, 300, 'Qui regarda '+str(getTxt(phases,2,indexImg[1], indexImg[2] )))
         render.image2d(200,250,0.7,'@data/Guru.jpg' )
         render.flip()
     render.flip()
