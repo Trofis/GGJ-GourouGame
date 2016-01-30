@@ -122,9 +122,13 @@ def dessine_fond_qui_scroll():
 	global dt_text_scroll
 	dt_text_scroll += clock.update()
 	dt_text_scroll %= 1.0
-	for i in range(20):
+	line_str = ''
+	char_list = '_\\|/'
+	for i in range(80):
+		line_str += char_list[int(dt_text_scroll * 10)%3] + '   '
+	for i in range(25):
 		j = i + dt_text_scroll
-		afficheTexte(j * -10.0, j * 50, '~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ', 0.15)
+		afficheTexte(j * -10.0, (j * 50) + 100, line_str, 0.15)
 
 
 def intro():
