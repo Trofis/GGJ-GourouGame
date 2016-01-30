@@ -6,6 +6,9 @@ import gs.plus.clock as clock
 from gs.plus import *
 import random
 
+SCREEN_W = 1920
+SCREEN_H = 1080
+
 dt_text_scroll = 0.0
 
 phases = [
@@ -21,7 +24,7 @@ phases = [
     ]
 
 gs.LoadPlugins(gs.get_default_plugins_path())
-render.init(1920, 1080, "pkg.core")
+render.init(SCREEN_W, SCREEN_H, "pkg.core")
 gs.MountFileDriver(gs.StdFileDriver("assets"), '@data')
 gs.MountFileDriver(gs.StdFileDriver("pkg.core"), "@core")
 
@@ -114,15 +117,15 @@ def selection():
                 indexDecor = (indexDecor + 1)%getImgParPha(phases)
 
             if indexDecor >= 0:
-                afficheImage(900, 300, phase, 0.5, indexDecor)
+                afficheImage((SCREEN_W-964)/2, 285, phase, 1.0, indexDecor)
                 afficheTexte(1200, 250, getTxt(phases, phase, indexDecor))
                 render.set_blend_mode2d(1)
-                afficheImageNot(800, 700,  0.5, '@data/ornement_gauche.png')
-                afficheImageNot(1320, 700,  0.5, '@data/ornement_droite.png')
+                afficheImageNot(430, 165 + 25,  1, '@data/ornement_gauche.png')
+                afficheImageNot(1090, 165 + 25,  1, '@data/ornement_droite.png')
                 render.set_blend_mode2d(0)
                 if phase == 0:
 
-                    afficheTexte(1000, 700, 'Où veux tu te retirer ?')
+                    afficheTexte(800, 220 + 25, 'OÙ VEUX TU TE RETIRER ?', size=0.85)
                     render.set_blend_mode2d(1)
                     afficheImageNot(700, 100,  1, '@data/choix_paysage.png')
                     render.set_blend_mode2d(0)
@@ -162,7 +165,7 @@ def afficheTexte(x, y, texte, transparence = 1.0, size = 1.0):
         if c == ' ':
             x += 5 * size
         else:
-            render.text2d(x, y, c, 30 * size, gs.Color.Blue, '@data/monof55.ttf')
+            render.text2d(x, y, c, 30 * size, gs.Color(35/255, 40/255, 114/255, 1.0), '@data/monof55.ttf')
             x += 15 * size
 
 
