@@ -95,7 +95,13 @@ def selection():
     return Gourou
 
 def afficheTexte(x, y, texte):
-        render.text2d(x, y, texte)
+    # Ugly patch, waiting for a fix of the font kerning ^__^;
+    for c in texte:
+        render.text2d(x, y, c, 30, gs.Color.White, '@data/monof55.ttf')
+        if c == ' ':
+            x += 5
+        else:
+            x += 15
 
 
 def afficheImage(x, y ,phase, echelle, phraseCourante):
