@@ -4,6 +4,7 @@ import gs.plus.render as render
 import gs.plus.input as input
 import gs.plus.audio as audio
 import gs.plus.clock as clock
+import gs.plus.camera as camera
 from gs.plus import *
 import random
 import webbrowser
@@ -121,13 +122,13 @@ def joue_sfx_phase():
 
 def main():
 	global cube, angle
-	musique()
-	intro()
 	angle = 0
 	cube = render.create_geometry(geometry.create_cone(subdiv_x=4))
+	musique()
+	intro()
 	gourou, gourou_index_list = selection()
 	index_gourou = generation(gourou, gourou_index_list)
-	print(lesGourou [index_gourou])
+	credit()
 	if 'Sylvain Durif' in lesGourou [index_gourou]:
 		final()
 	else:
@@ -157,6 +158,10 @@ def dessine_fond_qui_scroll():
 
 def intro():
 	text_blink = 0.0
+	angle = 0
+	fps = camera.fps_controller(0, 2, -10)
+	fps.update(clock.update())
+	render.set_camera3d(fps.pos.x, fps.pos.y, fps.pos.z, fps.rot.x, fps.rot.y, fps.rot.z)
 	while not input.key_press(gs.InputDevice.KeyEnter):
 		render.clear(gs.Color.White)
 		text_blink += clock.update()
@@ -165,11 +170,15 @@ def intro():
 
 		# Effet de background animé à la "Street Fighter" (hem)
 		dessine_fond_qui_scroll()
+		for z in range(-100, 100, 5):
+			for x in range(-100, 100, 5):
+				render.geometry3d(x, 0, z, cube)
 
 		afficheTexte(500, 400, 'Quel est ton gourou ?', size=2)
 		afficheTexte(500, 365, 'Choisis le sens de ta vie ~~~~~~~~~~~~~~')
 		afficheTexte(500, 325, '...et appuie sur [enter]', text_blink)
 		render.flip()
+		angle += 0.01
 
 	while input.key_press(gs.InputDevice.KeyEnter):
 		render.clear()
@@ -217,7 +226,7 @@ def selection():
 				amplitude = 1
 
 			if indexDecor >= 0:
-				# render.geometry2d(100, 100, cube, angle, angle * 2, 0, 100)
+
 				amplitude *= 0.95
 
 			yOffSet = [0, 0, 0]
@@ -283,7 +292,7 @@ def selection():
 				if indexDecor == 2:
 					afficheTexte(1180, 25 + yOffSet[2], getTxt(phases, phase, indexImg[phase - 1], indexDecor))
 
-			angle += 0.01
+
 			if input.key_press(gs.InputDevice.KeyEnter):
 
 				gourou_index_list.append(indexDecor)
@@ -453,6 +462,16 @@ def final():
 			render.flip()
 		render.flip()
 	render.flip()
+
+def credit():
+	while not input.key_press(gs.InputDevice.KeyEnter):
+		render.clear()
+		render.clear(gs.Color.White)
+		dessine_fond_qui_scroll()
+		afficheTexte(960,540, 'Made by Trofis #CODE and Safae #DESIGN' )
+		render.flip()
+	render.flip()
+
 
 
 main()
