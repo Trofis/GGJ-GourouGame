@@ -6,6 +6,7 @@ import gs.plus.audio as audio
 import gs.plus.clock as clock
 from gs.plus import *
 import random
+import webbrowser
 
 SCREEN_W = 1920
 SCREEN_H = 1080
@@ -88,6 +89,16 @@ phases = [
 	# ]
 ]
 
+gourou_web_page = ['http://derive-sectaire.fr/tag/durif/',
+                   'http://derive-sectaire.fr/tag/durif/',
+                   'http://derive-sectaire.fr/tag/durif/',
+                   'http://derive-sectaire.fr/tag/durif/',
+                   'http://derive-sectaire.fr/tag/durif/',
+                   'http://derive-sectaire.fr/tag/durif/',
+                   'http://derive-sectaire.fr/tag/durif/',
+                   'http://derive-sectaire.fr/tag/durif/',
+                   'http://derive-sectaire.fr/tag/durif/']
+
 gs.LoadPlugins(gs.get_default_plugins_path())
 render.init(SCREEN_W, SCREEN_H, "pkg.core")
 gs.MountFileDriver(gs.StdFileDriver("assets"), '@data')
@@ -115,8 +126,10 @@ def main():
 	angle = 0
 	cube = render.create_geometry(geometry.create_cone(subdiv_x=4))
 	gourou, gourou_index_list = selection()
-	generation(gourou, gourou_index_list)
+	index_gourou = generation(gourou, gourou_index_list)
 	audio.get_mixer().Stop(sound)
+	ouvre_page_gourou(index_gourou)
+	# final()
 
 
 # final()
@@ -352,6 +365,13 @@ def generation(gourou, gourou_index_list):
 		gourou_scale = (gourou_scale * gourou_acc + (1.0 - gourou_acc))
 		y_offset = y_offset * 0.95 + 0.5 * random.randint(-15, 15)
 	render.flip()
+
+	return index_gourou - 1
+
+
+def ouvre_page_gourou(index_gourou):
+	url = gourou_web_page[index_gourou] # 'http://derive-sectaire.fr/tag/durif/'
+	webbrowser.open(url, new=2, autoraise=True)
 
 
 def final():
