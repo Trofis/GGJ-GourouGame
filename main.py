@@ -128,7 +128,7 @@ def main():
 	gourou, gourou_index_list = selection()
 	index_gourou = generation(gourou, gourou_index_list)
 	print(lesGourou [index_gourou])
-	if 'sylvai' in lesGourou [index_gourou]:
+	if 'Sylvain Durif' in lesGourou [index_gourou]:
 		final()
 	else:
 		ouvre_page_gourou(index_gourou)
