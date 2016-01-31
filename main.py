@@ -355,7 +355,7 @@ def generation(gourou, gourou_index_list):
 	while not input.key_press(gs.InputDevice.KeyEnter):
 		render.clear(gs.Color.White)
 		dessine_fond_qui_scroll()
-		afficheTexte(700, 850, lesGourou[index_gourou]  )
+		afficheTexte(700, 850, lesGourou[index_gourou-1]  )
 		# afficheTexte(1050, 400, 'Au coeur ' + str(getTxt(phases, 1, indexImg[0], indexImg[1])))
 		# afficheTexte(1100, 300, 'Qui regarda '+str(getTxt(phases,2,indexImg[1], indexImg[2] )))
 		render.set_blend_mode2d(1)
