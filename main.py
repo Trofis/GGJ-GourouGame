@@ -116,6 +116,8 @@ def main():
 	cube = render.create_geometry(geometry.create_cone(subdiv_x=4))
 	gourou, gourou_index_list = selection()
 	generation(gourou, gourou_index_list)
+	# if 'durif' in lesGourou [gourou_index_list]:
+	final()
 	audio.get_mixer().Stop(sound)
 
 
@@ -361,7 +363,7 @@ def final():
 		# initialize graphic and audio systems
 
 		movie = gs.WebMMovie()
-		movie.Open("@data/thriftShop.webm")
+		movie.Open("@data/sylvain_durif.webm")
 
 		video_format = movie.GetVideoData().GetFormat()
 
