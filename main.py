@@ -13,7 +13,7 @@ SCREEN_H = 1080
 
 dt_text_scroll = 0.0
 
-lesGourou = ['Sylvain', 'Merlin', 'Hollande', 'EddyMalou', 'PacificSound3003', "Obama", 'Antoine Daniel', 'Mathieu Sommet', 'Link']
+lesGourou = ['gourou0', 'gourou1', 'gourou2', 'sylvain', 'gourou3', "gourou5", 'gourou6', 'gourou7', 'gourou8']
 
 
 phases = [
@@ -127,10 +127,12 @@ def main():
 	cube = render.create_geometry(geometry.create_cone(subdiv_x=4))
 	gourou, gourou_index_list = selection()
 	index_gourou = generation(gourou, gourou_index_list)
-	if 'durif' in lesGourou [index_gourou]:
+	print(lesGourou [index_gourou])
+	if 'sylvai' in lesGourou [index_gourou]:
 		final()
+	else:
+		ouvre_page_gourou(index_gourou)
 	audio.get_mixer().Stop(sound)
-	ouvre_page_gourou(index_gourou)
 	# final()
 
 
@@ -353,7 +355,7 @@ def generation(gourou, gourou_index_list):
 	while not input.key_press(gs.InputDevice.KeyEnter):
 		render.clear(gs.Color.White)
 		dessine_fond_qui_scroll()
-		afficheTexte(700, 850, lesGourou [index_gourou],  )
+		afficheTexte(700, 850, lesGourou[index_gourou]  )
 		# afficheTexte(1050, 400, 'Au coeur ' + str(getTxt(phases, 1, indexImg[0], indexImg[1])))
 		# afficheTexte(1100, 300, 'Qui regarda '+str(getTxt(phases,2,indexImg[1], indexImg[2] )))
 		render.set_blend_mode2d(1)
