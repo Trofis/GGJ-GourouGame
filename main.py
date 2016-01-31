@@ -108,15 +108,15 @@ gs.MountFileDriver(gs.StdFileDriver("pkg.core"), "@core")
 def musique():
 	global sound
 	audio.init()
-	sound = audio.get_mixer().Stream("@data/haters.ogg")
+	sound = audio.get_mixer().Stream("@data/Guru_02.wav")
 
 
 def joue_sfx_selection():
-	audio.get_mixer().Stream("@data/sfx_select_" + str(random.randint(0, 5)) + ".wav")
+	audio.get_mixer().Stream("@data/Input_Guru_01.wav")
 
 
 def joue_sfx_phase():
-	audio.get_mixer().Stream("@data/sfx_phase_" + str(random.randint(0, 4)) + ".wav")
+	audio.get_mixer().Stream("@data/Input_Guru_01.wav")
 
 
 def main():
@@ -208,12 +208,12 @@ def selection():
 
 			if input.key_press(gs.InputDevice.KeyLeft) and indexDecor > 0:
 				indexDecor = (indexDecor - 1) % getImgParPha(phases)
-				joue_sfx_selection()
+				# joue_sfx_selection()
 				amplitude = 1
 
 			if input.key_press(gs.InputDevice.KeyRight) and indexDecor < getImgParPha(phases) - 1:
 				indexDecor = (indexDecor + 1) % getImgParPha(phases)
-				joue_sfx_selection()
+				# joue_sfx_selection()
 				amplitude = 1
 
 			if indexDecor >= 0:
