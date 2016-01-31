@@ -13,7 +13,7 @@ SCREEN_H = 1080
 
 dt_text_scroll = 0.0
 
-lesGourou = ['gourou0', 'gourou1', 'gourou2', 'sylvain', 'gourou3', "gourou5", 'gourou6', 'gourou7', 'gourou8']
+lesGourou = ['Charles Russel', 'Raël', 'Ron Hubbard', 'Sylvain Durif', 'Makiguchi', "Sri Ramachandra", 'Gilbert Bourdin', 'Alejandro Jodorowsky', 'Jasmuheen']
 
 
 phases = [
@@ -89,15 +89,15 @@ phases = [
 	# ]
 ]
 
-gourou_web_page = ['http://derive-sectaire.fr/tag/durif/',
-                   'http://derive-sectaire.fr/tag/durif/',
-                   'http://derive-sectaire.fr/tag/durif/',
-                   'http://derive-sectaire.fr/tag/durif/',
-                   'http://derive-sectaire.fr/tag/durif/',
-                   'http://derive-sectaire.fr/tag/durif/',
-                   'http://derive-sectaire.fr/tag/durif/',
-                   'http://derive-sectaire.fr/tag/durif/',
-                   'http://derive-sectaire.fr/tag/durif/']
+gourou_web_page = ['https://fr.wikipedia.org/wiki/T%C3%A9moins_de_J%C3%A9hovah',
+                   'https://fr.wikipedia.org/wiki/Ra%C3%ABl',
+                   'https://fr.wikipedia.org/wiki/Scientologie',
+                   '@data/sylvain_durif.webm',
+                   'https://fr.wikipedia.org/wiki/S%C5%8Dka_Gakkai',
+                   'https://fr.wikipedia.org/wiki/Shri_Ram_Chandra_Mission',
+                   'https://fr.wikipedia.org/wiki/Gilbert_Bourdin_(aumisme)',
+                   'https://fr.wikipedia.org/wiki/Alejandro_Jodorowsky',
+                   'https://fr.wikipedia.org/wiki/In%C3%A9die']
 
 gs.LoadPlugins(gs.get_default_plugins_path())
 render.init(SCREEN_W, SCREEN_H, "pkg.core")
