@@ -38,52 +38,52 @@ phases = [
 				]
 			],
 
-			[
-				[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
-				{'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
-				{'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}
-				],
-
-				[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
-				{'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
-				{'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}
-				],
-
-				[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
-				{'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
-				{'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}
-				],
-
-				[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
-				{'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
-				{'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}
-				],
-
-				[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
-				{'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
-				{'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}
-				],
-
-				[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
-				{'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
-				{'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}
-				],
-
-				[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
-				{'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
-				{'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}
-				],
-
-				[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
-				{'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
-				{'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}
-				],
-
-				[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
-				{'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
-				{'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}
-				],
-			]
+			# [
+			# 	[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
+			# 	{'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
+			# 	{'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}
+			# 	],
+			#
+			# 	[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
+			# 	{'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
+			# 	{'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}
+			# 	],
+			#
+			# 	[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
+			# 	{'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
+			# 	{'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}
+			# 	],
+			#
+			# 	[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
+			# 	{'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
+			# 	{'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}
+			# 	],
+			#
+			# 	[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
+			# 	{'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
+			# 	{'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}
+			# 	],
+			#
+			# 	[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
+			# 	{'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
+			# 	{'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}
+			# 	],
+			#
+			# 	[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
+			# 	{'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
+			# 	{'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}
+			# 	],
+			#
+			# 	[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
+			# 	{'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
+			# 	{'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}
+			# 	],
+			#
+			# 	[{'img': '@data/soleil.jpg', 'phrase': 'ce beau soleil'},
+			# 	{'img': '@data/Pluie.jpg', 'phrase': 'celle belle averse'},
+			# 	{'img': '@data/arcEnCiel.jpg', 'phrase': 'ce beau arc-en-ciel'}
+			# 	],
+			# ]
 		]
 
 gs.LoadPlugins(gs.get_default_plugins_path())
@@ -112,7 +112,7 @@ def main ():
 	gourou, gourou_index_list = selection()
 	generation(gourou, gourou_index_list)
 	audio.get_mixer().Stop(sound)
-	final()
+	# final()
 
 
 # Cette fonction peut être appelée de partout
@@ -284,13 +284,14 @@ def selection():
 
 
 def afficheTexte(x, y, texte, transparence = 1.0, size = 1.0):
+	render.text2d(x, y, texte, 30 * size, gs.Color(35/255, 40/255, 114/255, transparence), '@data/Century_Gothic.ttf')
 	# Ugly patch, waiting for a fix of the font kerning ^__^;
-	for c in texte:
-		if c == ' ':
-			x += 5 * size
-		else:
-			render.text2d(x, y, c, 30 * size, gs.Color(35/255, 40/255, 114/255, transparence), '@data/monof55.ttf')
-			x += 15 * size
+	# for c in texte:
+	# 	if c == ' ':
+	# 		x += 5 * size
+	# 	else:
+	# 		render.text2d(x, y, c, 30 * size, gs.Color(35/255, 40/255, 114/255, transparence), '@data/monof55.ttf')
+	# 		x += 15 * size
 
 
 def afficheImage(x, y ,phase, echelle, phraseCourante, jeuCarte):
@@ -302,23 +303,35 @@ def afficheImageNot(x, y, echelle, lien):
 
 def generation(gourou, gourou_index_list):
 	print(gourou_index_list)
+	index_gourou = (gourou_index_list[0] + gourou_index_list[1] * 3) + 1
 	while not input.key_press(gs.InputDevice.KeyEnter):
 		render.clear(gs.Color.White)
 		# dessine_fond_qui_scroll()
 
-		afficheTexte(800, 500, 'Voyons désormais quel est votre Gourou ....')
-		render.image2d(200,250,0.7,'@data/Guru.jpg' )
+		afficheTexte(800, 500, 'Voyons désormais quel est ton Gourou ....')
+		# render.set_blend_mode2d(1)
+		# render.image2d((1920-400)/2,(1024-350)/2,1.0,'@data/gourou' + str(index_gourou) + '.png')
+		# render.set_blend_mode2d(0)
 		render.flip()
 	render.flip()
 
+	gourou_scale = 0.25
+	gourou_acc = 0.995
+	y_offset = 0.0
 	while not input.key_press(gs.InputDevice.KeyEnter):
 		render.clear(gs.Color.White)
 		# dessine_fond_qui_scroll()
 		afficheTexte(1000, 500, 'Il était un fois '+str(getTxt(phases,0,0 ,indexImg[0])))
 		afficheTexte(1050, 400, 'Au coeur '+str(getTxt(phases,1,indexImg[0],indexImg[1])))
-		afficheTexte(1100, 300, 'Qui regarda '+str(getTxt(phases,2,indexImg[1], indexImg[2] )))
-		render.image2d(200,250,0.7,'@data/Guru.jpg' )
+		# afficheTexte(1100, 300, 'Qui regarda '+str(getTxt(phases,2,indexImg[1], indexImg[2] )))
+		render.set_blend_mode2d(1)
+		gourou_scale_tmp = gourou_scale * 1.5
+		render.image2d((1920-(400 * gourou_scale_tmp))/2, (1024-(350 * gourou_scale_tmp))/2 + y_offset * (1.0 - gourou_scale * gourou_scale), gourou_scale_tmp, '@data/gourou' + str(index_gourou) + '.png')
+		render.set_blend_mode2d(0)
 		render.flip()
+
+		gourou_scale = (gourou_scale * gourou_acc + (1.0 - gourou_acc))
+		y_offset = y_offset * 0.95 + 0.5 * random.randint(-15,15)
 	render.flip()
 
 
