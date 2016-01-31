@@ -127,8 +127,8 @@ def main():
 	cube = render.create_geometry(geometry.create_cone(subdiv_x=4))
 	gourou, gourou_index_list = selection()
 	index_gourou = generation(gourou, gourou_index_list)
-	# if 'durif' in lesGourou [gourou_index_list]:
-	final()
+	if 'durif' in lesGourou [index_gourou]:
+		final()
 	audio.get_mixer().Stop(sound)
 	ouvre_page_gourou(index_gourou)
 	# final()
