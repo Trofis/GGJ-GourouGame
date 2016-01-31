@@ -128,7 +128,7 @@ def main():
 	intro()
 	gourou, gourou_index_list = selection()
 	index_gourou = generation(gourou, gourou_index_list)
-	credit()
+
 	if 'Sylvain Durif' in lesGourou [index_gourou]:
 		final()
 	else:
@@ -177,6 +177,7 @@ def intro():
 		afficheTexte(500, 400, 'Quel est ton gourou ?', size=2)
 		afficheTexte(500, 365, 'Choisis le sens de ta vie ~~~~~~~~~~~~~~')
 		afficheTexte(500, 325, '...et appuie sur [enter]', text_blink)
+		afficheTexte(815,20, 'Made by Trofis #CODE and Safae #DESIGN' , size=0.5)
 		render.flip()
 		angle += 0.01
 
@@ -392,85 +393,83 @@ def ouvre_page_gourou(index_gourou):
 
 
 def final():
-	while not input.key_press(gs.InputDevice.KeyEnter):
-		render.clear()
+	render.clear()
 
-		# initialize graphic and audio systems
+	# initialize graphic and audio systems
 
-		movie = gs.WebMMovie()
-		movie.Open("@data/sylvain_durif.webm")
+	movie = gs.WebMMovie()
+	movie.Open("@data/sylvain_durif.webm")
 
-		video_format = movie.GetVideoData().GetFormat()
+	video_format = movie.GetVideoData().GetFormat()
 
-		# create the frame textures and frame object
-		gpu = render.get_renderer()
-		y_tex = gpu.NewTexture()
-		gpu.CreateTexture(y_tex, video_format.width, video_format.height, gs.GpuTexture.R8, gs.GpuTexture.NoAA,
-						  gs.GpuTexture.UsageDefault, False)
-		u_tex = gpu.NewTexture()
-		gpu.CreateTexture(u_tex, video_format.width // 2, video_format.height // 2, gs.GpuTexture.R8,
+	# create the frame textures and frame object
+	gpu = render.get_renderer()
+	y_tex = gpu.NewTexture()
+	gpu.CreateTexture(y_tex, video_format.width, video_format.height, gs.GpuTexture.R8, gs.GpuTexture.NoAA,
+					  gs.GpuTexture.UsageDefault, False)
+	u_tex = gpu.NewTexture()
+	gpu.CreateTexture(u_tex, video_format.width // 2, video_format.height // 2, gs.GpuTexture.R8,
 						  gs.GpuTexture.NoAA, gs.GpuTexture.UsageDefault, False)
-		v_tex = gpu.NewTexture()
-		gpu.CreateTexture(v_tex, video_format.width // 2, video_format.height // 2, gs.GpuTexture.R8,
+	v_tex = gpu.NewTexture()
+	gpu.CreateTexture(v_tex, video_format.width // 2, video_format.height // 2, gs.GpuTexture.R8,
 						  gs.GpuTexture.NoAA, gs.GpuTexture.UsageDefault, False)
 
-		frame = gs.VideoFrame()
-		video_format.ClearFrame(frame)
-		video_timestamp = gs.time(0)  # assume first frame time stamp is 0
+	frame = gs.VideoFrame()
+	video_format.ClearFrame(frame)
+	video_timestamp = gs.time(0)  # assume first frame time stamp is 0
 
-		# load the YV12 to RGB shader and setup drawing states
-		shader = gpu.LoadShader("@data/yv12.isl")
+	# load the YV12 to RGB shader and setup drawing states
+	shader = gpu.LoadShader("@data/yv12.isl")
 
-		gpu.EnableDepthTest(False)  # disable depth testing so that we don't even need to clear the z-buffer
+	gpu.EnableDepthTest(False)  # disable depth testing so that we don't even need to clear the z-buffer
 
-		# start streaming the movie audio data
-		channel = audio.get_mixer().StreamData(movie.GetAudioData())
+	# start streaming the movie audio data
+	channel = audio.get_mixer().StreamData(movie.GetAudioData())
 
-		# play until movie ends
-		while not movie.IsEOF():
-			render.clear()
-			# fit the while output window
-			screen_size = gpu.GetCurrentOutputWindow().GetSize()
-			gpu.SetViewport(gs.fRect(0, 0, screen_size.x, screen_size.y))
-			gpu.Set2DMatrices()  # update the 2d matrix
-
-			# fetch the next video frame once audio gets past video
-			audio_timestamp = audio.get_mixer().GetChannelPosition(channel)  # audio timestamp as reported by the mixer
-
-			if audio_timestamp >= video_timestamp:
-				movie.GetVideoData().GetFrame(frame)
-				video_timestamp = frame.GetTimestamp()
-				gpu.BlitTexture(y_tex, frame.GetPlaneData(gs.VideoFrame.Y), video_format.width, video_format.height)
-				gpu.BlitTexture(u_tex, frame.GetPlaneData(gs.VideoFrame.U), video_format.width // 2,
-								video_format.height // 2)
-				gpu.BlitTexture(v_tex, frame.GetPlaneData(gs.VideoFrame.V), video_format.width // 2,
-								video_format.height // 2)
-
-				# draw the current video frame to screen
-				vtxs = [gs.Vector3(0, 0, 0.5), gs.Vector3(0, screen_size.y, 0.5),
-						gs.Vector3(screen_size.x, screen_size.y, 0.5), gs.Vector3(0, 0, 0.5),
-						gs.Vector3(screen_size.x, screen_size.y, 0.5), gs.Vector3(screen_size.x, 0, 0.5)]
-				uvs = [gs.Vector2(0, 1), gs.Vector2(0, 0), gs.Vector2(1, 0), gs.Vector2(0, 1), gs.Vector2(1, 0),
-					   gs.Vector2(1, 1)]
-			render_system = render.get_render_system()
-			gpu.SetShader(shader)
-			gs.SetShaderEngineValues(render_system)
-			gpu.SetShaderTexture("y_tex", y_tex)
-			gpu.SetShaderTexture("u_tex", u_tex)
-			gpu.SetShaderTexture("v_tex", v_tex)
-			render_system.DrawTriangleUV(2, vtxs, uvs)
-			render.flip()
-		render.flip()
-	render.flip()
-
-def credit():
-	while not input.key_press(gs.InputDevice.KeyEnter):
+	# play until movie ends
+	while not movie.IsEOF():
 		render.clear()
-		render.clear(gs.Color.White)
-		dessine_fond_qui_scroll()
-		afficheTexte(960,540, 'Made by Trofis #CODE and Safae #DESIGN' )
+		# fit the while output window
+		screen_size = gpu.GetCurrentOutputWindow().GetSize()
+		gpu.SetViewport(gs.fRect(0, 0, screen_size.x, screen_size.y))
+		gpu.Set2DMatrices()  # update the 2d matrix
+
+		# fetch the next video frame once audio gets past video
+		audio_timestamp = audio.get_mixer().GetChannelPosition(channel)  # audio timestamp as reported by the mixer
+
+		if audio_timestamp >= video_timestamp:
+			movie.GetVideoData().GetFrame(frame)
+			video_timestamp = frame.GetTimestamp()
+			gpu.BlitTexture(y_tex, frame.GetPlaneData(gs.VideoFrame.Y), video_format.width, video_format.height)
+			gpu.BlitTexture(u_tex, frame.GetPlaneData(gs.VideoFrame.U), video_format.width // 2,
+							video_format.height // 2)
+			gpu.BlitTexture(v_tex, frame.GetPlaneData(gs.VideoFrame.V), video_format.width // 2,
+							video_format.height // 2)
+
+			# draw the current video frame to screen
+			vtxs = [gs.Vector3(0, 0, 0.5), gs.Vector3(0, screen_size.y, 0.5),
+					gs.Vector3(screen_size.x, screen_size.y, 0.5), gs.Vector3(0, 0, 0.5),
+					gs.Vector3(screen_size.x, screen_size.y, 0.5), gs.Vector3(screen_size.x, 0, 0.5)]
+			uvs = [gs.Vector2(0, 1), gs.Vector2(0, 0), gs.Vector2(1, 0), gs.Vector2(0, 1), gs.Vector2(1, 0),
+				   gs.Vector2(1, 1)]
+		render_system = render.get_render_system()
+		gpu.SetShader(shader)
+		gs.SetShaderEngineValues(render_system)
+		gpu.SetShaderTexture("y_tex", y_tex)
+		gpu.SetShaderTexture("u_tex", u_tex)
+		gpu.SetShaderTexture("v_tex", v_tex)
+		render_system.DrawTriangleUV(2, vtxs, uvs)
 		render.flip()
-	render.flip()
+
+
+# def credit():
+# 	while not input.key_press(gs.InputDevice.KeyEnter):
+# 		render.clear()
+# 		render.clear(gs.Color.White)
+# 		dessine_fond_qui_scroll()
+# 		afficheTexte(960,540, 'Made by Trofis #CODE and Safae #DESIGN' )
+# 		render.flip()
+# 	render.flip()
 
 
 
