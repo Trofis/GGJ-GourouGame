@@ -231,7 +231,7 @@ def selection():
 				yOffSet[indexDecor] = random.randint(-5, 5)
 				afficheImage((SCREEN_W - 1050) / 2, 285 + random.randint(-25, 25) * amplitude, phase, 1.0, indexDecor,
 							 0)
-				afficheTexte(800, 220 + 25, 'OÙ VEUX TU TE RETIRER ?', size=0.85)
+				afficheTexte(800, 220 + 25, 'OÙ VEUX TU TE RETIRER ?', size=0.75)
 				render.set_blend_mode2d(1)
 				afficheImageNot(600, 50, 1, '@data/choix_paysage.png')
 				render.set_blend_mode2d(0)
@@ -246,7 +246,7 @@ def selection():
 				yOffSet[indexDecor] = random.randint(-5, 5)
 				afficheImage((SCREEN_W - 1050) / 2, 285 + random.randint(-25, 25) * amplitude, phase, 1.0, indexDecor,
 							 indexImg[phase - 1])
-				afficheTexte(750, 220 + 25, 'CHOISIS UNE AMBIANCE MYSTIQUE', size=0.85)
+				afficheTexte(740, 220 + 25, 'CHOISIS UNE AMBIANCE MYSTIQUE', size=0.75)
 				render.set_blend_mode2d(1)
 				afficheImageNot(600, 50, 1, '@data/choix_ambiance.png')
 				render.set_blend_mode2d(0)
