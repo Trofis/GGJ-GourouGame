@@ -18,9 +18,9 @@ lesGourou = ['Charles Russel', 'Raël', 'Ron Hubbard', 'Sylvain Durif', 'Makiguc
 
 phases = [
 	[
-		[{'img': '@data/montagne.png', 'phrase': 'sous la neige'},
-		 {'img': '@data/foret.png', 'phrase': "sous les chênes"},
-		 {'img': "@data/mer.png", 'phrase': ' sous les cocos '}
+		[{'img': '@data/montagne.png', 'phrase': 'Montagne'},
+		 {'img': '@data/foret.png', 'phrase': "Forêt"},
+		 {'img': "@data/mer.png", 'phrase': 'Plage'}
 		 ]
 	],
 
@@ -235,9 +235,12 @@ def selection():
 				render.set_blend_mode2d(1)
 				afficheImageNot(600, 50, 1, '@data/choix_paysage.png')
 				render.set_blend_mode2d(0)
-				afficheTexte(600, 25 + yOffSet[0], getTxt(phases, phase, 0, 0))
-				afficheTexte(830, 25 + yOffSet[1], getTxt(phases, phase, 0, 1))
-				afficheTexte(1100, 25 + yOffSet[2], getTxt(phases, phase, 0, 2))
+				if indexDecor == 0:
+					afficheTexte(620, 25 + yOffSet[0], getTxt(phases, phase, 0, 0))
+				if indexDecor == 1:
+					afficheTexte(890, 25 + yOffSet[1], getTxt(phases, phase, 0, 1))
+				if indexDecor == 2:
+					afficheTexte(1165, 25 + yOffSet[2], getTxt(phases, phase, 0, 2))
 
 			elif phase == 1:
 				yOffSet[indexDecor] = random.randint(-5, 5)
@@ -247,10 +250,11 @@ def selection():
 				render.set_blend_mode2d(1)
 				afficheImageNot(600, 50, 1, '@data/choix_ambiance.png')
 				render.set_blend_mode2d(0)
+
 				# print(indexImg)
 
 				if indexDecor == 0:
-					afficheTexte(620, 25 + yOffSet[0], getTxt(phases, phase, indexImg[phase - 1], indexDecor),
+					afficheTexte(600, 25 + yOffSet[0], getTxt(phases, phase, indexImg[phase - 1], indexDecor),
 								 size=0.75)
 
 				if indexDecor == 1:
