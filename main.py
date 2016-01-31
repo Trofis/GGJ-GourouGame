@@ -13,16 +13,8 @@ SCREEN_H = 1080
 
 dt_text_scroll = 0.0
 
-lesGourou = ['Charles Russel', 'Raël', 'Ron Hubbard', 'Sylvain Durif', 'Makiguchi', "Sri Ramachandra", 'Gilbert Bourdin', 'Alejandro Jodorowsky', 'Jasmuheen']
-gourou_res_page = ['https://fr.wikipedia.org/wiki/T%C3%A9moins_de_J%C3%A9hovah',
-                   'https://fr.wikipedia.org/wiki/Ra%C3%ABl',
-                   'https://fr.wikipedia.org/wiki/Scientologie',
-                   'sylvain_durif.webm',
-                   'https://fr.wikipedia.org/wiki/S%C5%8Dka_Gakkai',
-                   'https://fr.wikipedia.org/wiki/Shri_Ram_Chandra_Mission',
-                   'https://fr.wikipedia.org/wiki/Gilbert_Bourdin_(aumisme)',
-                   'https://fr.wikipedia.org/wiki/Alejandro_Jodorowsky',
-                   'https://fr.wikipedia.org/wiki/In%C3%A9die']
+lesGourou = ['Sylvain', 'Merlin', 'Hollande', 'EddyMalou', 'PacificSound3003', "Obama", 'Antoine Daniel', 'Mathieu Sommet', 'Link']
+
 
 phases = [
 	[
@@ -97,6 +89,16 @@ phases = [
 	# ]
 ]
 
+gourou_web_page = ['http://derive-sectaire.fr/tag/durif/',
+                   'http://derive-sectaire.fr/tag/durif/',
+                   'http://derive-sectaire.fr/tag/durif/',
+                   'http://derive-sectaire.fr/tag/durif/',
+                   'http://derive-sectaire.fr/tag/durif/',
+                   'http://derive-sectaire.fr/tag/durif/',
+                   'http://derive-sectaire.fr/tag/durif/',
+                   'http://derive-sectaire.fr/tag/durif/',
+                   'http://derive-sectaire.fr/tag/durif/']
+
 gs.LoadPlugins(gs.get_default_plugins_path())
 render.init(SCREEN_W, SCREEN_H, "pkg.core")
 gs.MountFileDriver(gs.StdFileDriver("assets"), '@data')
@@ -125,12 +127,11 @@ def main():
 	cube = render.create_geometry(geometry.create_cone(subdiv_x=4))
 	gourou, gourou_index_list = selection()
 	index_gourou = generation(gourou, gourou_index_list)
-
-	if gourou_res_page[index_gourou].find('.webm') > -1:
-		audio.get_mixer().Stop(sound)
-		ouvre_video(index_gourou)
-	else:
-		ouvre_page_gourou(index_gourou)
+	if 'durif' in lesGourou [index_gourou]:
+		final()
+	audio.get_mixer().Stop(sound)
+	ouvre_page_gourou(index_gourou)
+	# final()
 
 
 # final()
@@ -371,18 +372,18 @@ def generation(gourou, gourou_index_list):
 
 
 def ouvre_page_gourou(index_gourou):
-	url = gourou_res_page[index_gourou] # 'http://derive-sectaire.fr/tag/durif/'
+	url = gourou_web_page[index_gourou] # 'http://derive-sectaire.fr/tag/durif/'
 	webbrowser.open(url, new=2, autoraise=True)
 
 
-def ouvre_video(index_gourou):
+def final():
 	while not input.key_press(gs.InputDevice.KeyEnter):
 		render.clear()
 
 		# initialize graphic and audio systems
 
 		movie = gs.WebMMovie()
-		movie.Open("@data/" + gourou_res_page[index_gourou])
+		movie.Open("@data/sylvain_durif.webm")
 
 		video_format = movie.GetVideoData().GetFormat()
 
