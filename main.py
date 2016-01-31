@@ -158,7 +158,7 @@ def selection():
                 amplitude = 1
 
             if indexDecor >= 0:
-                # render.geometry2d(100, 100, cube, angle, angle * 2, 0, 100)
+                render.geometry2d(100, 100, cube, angle, angle * 2, 0, 100)
                 amplitude *= 0.95
 
             yOffSet = [0,0,0]*3**phase
