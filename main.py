@@ -128,12 +128,12 @@ def main():
 	intro()
 	gourou, gourou_index_list = selection()
 	index_gourou = generation(gourou, gourou_index_list)
-
+	audio.get_mixer().Stop(sound)
 	if 'Sylvain Durif' in lesGourou [index_gourou]:
 		final()
 	else:
 		ouvre_page_gourou(index_gourou)
-	audio.get_mixer().Stop(sound)
+
 	# final()
 
 
